@@ -11,3 +11,20 @@ IF OBJECT_ID('[stg_bright_mart_sales].[dbo].[dim_product]', 'U') IS NULL
         [load_date] DATETIME DEFAULT GETDATE()
     );
 GO
+
+-- Insert distinct values into the table from raw data
+INSERT INTO [stg_bright_mart_sales].[dbo].[dim_product] (
+		[supplier],
+		[product_name],
+	    [category],
+	    [sub_category],
+	    [sku]
+)
+SELECT DISTINCT
+        [supplier],
+		[product_name],
+	    [category],
+	    [sub_category],
+	    [sku]
+FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
+
