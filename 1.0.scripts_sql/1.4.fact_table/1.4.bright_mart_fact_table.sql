@@ -15,4 +15,26 @@ IF OBJECT_ID('[stg_bright_mart_sales].[dbo].[bright_mart_fact_table]', 'U') IS N
     );
 GO
 
+-- Insert distinct values into the table from raw data
+INSERT INTO [stg_bright_mart_sales].[dbo].[bright_mart_fact_table] (
+        [unit_price],
+		[cost_price],
+		[qty],
+		[line_amount],
+		[stock_on_hand],
+		[reorder_threshold],
+		[transaction_amount],
+		[transaction_discount]
+)
+SELECT DISTINCT
+        [unit_price],
+		[cost_price],
+		[qty],
+		[line_amount],
+		[stock_on_hand],
+		[reorder_threshold],
+		[transaction_amount],
+		[transaction_discount]
+FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
+
 
