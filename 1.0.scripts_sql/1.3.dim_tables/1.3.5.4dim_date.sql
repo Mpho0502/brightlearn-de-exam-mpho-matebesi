@@ -18,3 +18,7 @@ SELECT DISTINCT
         [transaction_date],
         [customer_since]
 FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
+
+-- Show the dim customer table
+SELECT *
+FROM [stg_bright_mart_sales].[dbo].[dim_date];
