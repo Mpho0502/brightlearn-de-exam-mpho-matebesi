@@ -30,3 +30,8 @@ SELECT DISTINCT
         [store_manager],
         [cashier_name]
 FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
+
+-- Show the dim store table
+SELECT *
+FROM [stg_bright_mart_sales].[dbo].[dim_store];
+
