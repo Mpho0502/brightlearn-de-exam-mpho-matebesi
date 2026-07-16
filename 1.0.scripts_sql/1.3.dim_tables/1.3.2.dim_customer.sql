@@ -13,3 +13,23 @@ IF OBJECT_ID('[stg_bright_mart_sales].[dbo].[dim_customer]', 'U') IS NULL
         [load_date] DATETIME DEFAULT GETDATE()
     );
 GO
+
+-- Insert distinct values into the table from raw data
+INSERT INTO [stg_bright_mart_sales].[dbo].[dim_customer] (
+        [customer_first_name],
+		[customer_last_name],
+		[customer_email],
+		[customer_phone],
+		[customer_city],
+		[customer_province],
+		[customer_loyalty_tier]
+)
+SELECT DISTINCT
+        [customer_first_name],
+		[customer_last_name],
+		[customer_email],
+		[customer_phone],
+		[customer_city],
+		[customer_province],
+		[customer_loyalty_tier]
+FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
