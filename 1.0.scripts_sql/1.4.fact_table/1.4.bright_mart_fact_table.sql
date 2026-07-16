@@ -37,4 +37,6 @@ SELECT DISTINCT
 		[transaction_discount]
 FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
 
-
+-- Show the dim customer table
+SELECT *
+FROM [stg_bright_mart_sales].[dbo].[bright_mart_fact_table];
