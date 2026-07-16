@@ -33,3 +33,7 @@ SELECT DISTINCT
 		[customer_province],
 		[customer_loyalty_tier]
 FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
+
+-- Show the dim customer table
+SELECT *
+FROM [stg_bright_mart_sales].[dbo].[dim_customer];
