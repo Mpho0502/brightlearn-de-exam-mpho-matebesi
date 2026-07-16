@@ -15,3 +15,7 @@ INSERT INTO [stg_bright_mart_sales].[dbo].[dim_payment] (
 SELECT DISTINCT
         [payment_method]
 FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
+
+-- Show the dim product table
+SELECT *
+FROM [stg_bright_mart_sales].[dbo].[dim_payment];
