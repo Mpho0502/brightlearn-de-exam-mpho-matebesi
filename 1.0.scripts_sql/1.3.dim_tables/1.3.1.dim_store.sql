@@ -13,3 +13,20 @@ IF OBJECT_ID('[stg_bright_mart_sales].[dbo].[dim_store]', 'U') IS NULL
     );
 GO
 
+-- Insert distinct values into the table from raw data
+INSERT INTO [stg_bright_mart_sales].[dbo].[dim_store] (
+        [store_name],
+        [store_city],
+        [store_province],
+        [store_region],
+        [store_manager],
+        [cashier_name]
+)
+SELECT DISTINCT
+        [store_name],
+        [store_city],
+        [store_province],
+        [store_region],
+        [store_manager],
+        [cashier_name]
+FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
