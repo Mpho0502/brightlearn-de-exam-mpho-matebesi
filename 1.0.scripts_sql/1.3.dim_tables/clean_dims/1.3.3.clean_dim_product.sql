@@ -40,3 +40,6 @@ AND NOT EXISTS (
         AND cdp.[sub_category] = COALESCE(NULLIF(TRIM(srd.[sub_category]), ''), 'Unknown')
         AND cdp.[sku]          = COALESCE(NULLIF(TRIM(srd.[sku]), ''), 'Unknown')
   );
+
+  -- Show the clean table to verify the data types and contents 
+  SELECT * FROM [stg_bright_mart_sales].[dbo].[clean_dim_product];
