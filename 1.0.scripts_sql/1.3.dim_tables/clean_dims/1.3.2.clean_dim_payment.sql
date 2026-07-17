@@ -25,3 +25,5 @@ WHERE [payment_method] IS NOT NULL
   );
 GO
 
+-- Show the clean table to verify the data types and contents 
+SELECT * FROM [stg_bright_mart_sales].[dbo].[clean_dim_payment];
