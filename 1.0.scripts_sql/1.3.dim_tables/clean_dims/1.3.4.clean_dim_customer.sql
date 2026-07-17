@@ -51,3 +51,5 @@ WHERE ([customer_first_name] IS NOT NULL OR
         AND cdc.[customer_loyalty_tier] = COALESCE(NULLIF(TRIM(srd.[customer_loyalty_tier]), ''), 'Unknown')
   );
 
+  -- Show the clean table to verify the data types and contents 
+SELECT * FROM [stg_bright_mart_sales].[dbo].[clean_dim_customer];
