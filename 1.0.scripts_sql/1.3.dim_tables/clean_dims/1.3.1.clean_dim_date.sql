@@ -9,3 +9,21 @@ BEGIN
     );
 END; 
 
+-- Insert rows using WHERE NOT EXISTS to prevent duplicates across multiple execution runs
+INSERT INTO [stg_bright_mart_sales].[dbo].[clean_dim_date] ( 
+    [transaction_date], 
+    [customer_since] 
+) 
+SELECT DISTINCT 
+    -- If conversion fails or raw data is NULL, fallback to a default '1900-01-01' date 
+    COALESCE(TRY_CONVERT(DATE, [transaction_date]), '1900-01-01') AS [transaction_date], 
+    COALESCE(TRY_CONVERT(DATE, [customer_since]), '1900-01-01') AS [customer_since] 
+FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data] AS srd
+WHERE ([transaction_date] IS NOT NULL OR [customer_since] IS NOT NULL)
+  AND NOT EXISTS (
+      SELECT 1 
+      FROM [stg_bright_mart_sales].[dbo].[clean_dim_date] AS cdd
+      WHERE cdd.[transaction_date] = COALESCE(TRY_CONVERT(DATE, srd.[transaction_date]), '1900-01-01')
+        AND cdd.[customer_since]   = COALESCE(TRY_CONVERT(DATE, srd.[customer_since]), '1900-01-01')
+  );
+GO
