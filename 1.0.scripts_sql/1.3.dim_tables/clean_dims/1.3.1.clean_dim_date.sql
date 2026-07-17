@@ -27,3 +27,7 @@ WHERE ([transaction_date] IS NOT NULL OR [customer_since] IS NOT NULL)
         AND cdd.[customer_since]   = COALESCE(TRY_CONVERT(DATE, srd.[customer_since]), '1900-01-01')
   );
 GO
+
+-- Show the clean table to verify the data types and contents 
+SELECT *
+FROM [stg_bright_mart_sales].[dbo].[clean_dim_date];
