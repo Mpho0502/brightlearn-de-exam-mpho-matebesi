@@ -45,3 +45,7 @@ AND NOT EXISTS (
         AND cds.[store_manager]  = COALESCE(NULLIF(TRIM(srd.[store_manager]), ''), 'Unknown')
         AND cds.[cashier_name]   = COALESCE(NULLIF(TRIM(srd.[cashier_name]), ''), 'Unknown')
   );
+  
+--Show the clean table to verify the data types and contents 
+SELECT * FROM [stg_bright_mart_sales].[dbo].[clean_dim_store];
+
