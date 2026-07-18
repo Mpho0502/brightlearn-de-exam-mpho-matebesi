@@ -13,30 +13,42 @@ IF OBJECT_ID('[stg_bright_mart_sales].[dbo].[bright_mart_fact_table]', 'U') IS N
 		[transaction_discount] [varchar](50) NULL,
         [load_date] DATETIME DEFAULT GETDATE()
     );
-GO
 
--- Insert distinct values into the table from raw data
+-- Insert distinct values into the table from raw data only if they do not already exist
 INSERT INTO [stg_bright_mart_sales].[dbo].[bright_mart_fact_table] (
         [unit_price],
-		[cost_price],
-		[qty],
-		[line_amount],
-		[stock_on_hand],
-		[reorder_threshold],
-		[transaction_amount],
-		[transaction_discount]
+        [cost_price],
+        [qty],
+        [line_amount],
+        [stock_on_hand],
+        [reorder_threshold],
+        [transaction_amount],
+        [transaction_discount]
 )
 SELECT DISTINCT
-        [unit_price],
-		[cost_price],
-		[qty],
-		[line_amount],
-		[stock_on_hand],
-		[reorder_threshold],
-		[transaction_amount],
-		[transaction_discount]
-FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
+        raw.[unit_price],
+        raw.[cost_price],
+        raw.[qty],
+        raw.[line_amount],
+        raw.[stock_on_hand],
+        raw.[reorder_threshold],
+        raw.[transaction_amount],
+        raw.[transaction_discount]
+FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data] raw
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM [stg_bright_mart_sales].[dbo].[bright_mart_fact_table] fact
+    WHERE ISNULL(fact.[unit_price], '')           = ISNULL(raw.[unit_price], '')
+      AND ISNULL(fact.[cost_price], '')           = ISNULL(raw.[cost_price], '')
+      AND ISNULL(fact.[qty], '')                  = ISNULL(raw.[qty], '')
+      AND ISNULL(fact.[line_amount], '')          = ISNULL(raw.[line_amount], '')
+      AND ISNULL(fact.[stock_on_hand], '')        = ISNULL(raw.[stock_on_hand], '')
+      AND ISNULL(fact.[reorder_threshold], '')    = ISNULL(raw.[reorder_threshold], '')
+      AND ISNULL(fact.[transaction_amount], '')   = ISNULL(raw.[transaction_amount], '')
+      AND ISNULL(fact.[transaction_discount], '') = ISNULL(raw.[transaction_discount], '')
+);
 
 -- Show the dim customer table
 SELECT *
 FROM [stg_bright_mart_sales].[dbo].[bright_mart_fact_table];
+
