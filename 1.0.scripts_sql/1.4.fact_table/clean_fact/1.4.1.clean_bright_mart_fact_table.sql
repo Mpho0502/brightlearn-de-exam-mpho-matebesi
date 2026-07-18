@@ -23,7 +23,8 @@ INSERT INTO [stg_bright_mart_sales].[dbo].[clean_bright_mart_fact_table] (
     [stock_on_hand], 
     [reorder_threshold], 
     [transaction_amount], 
-    [transaction_discount] 
+    [transaction_discount],
+    [is_negative_value]
 ) 
 SELECT DISTINCT 
     -- TRY_CONVERT safely converts text to numbers. If it's a blank or non-numeric string, it returns NULL.
@@ -35,7 +36,10 @@ SELECT DISTINCT
     COALESCE(TRY_CONVERT(INT,            NULLIF(TRIM([stock_on_hand]), '')), 0)           AS [stock_on_hand], 
     COALESCE(TRY_CONVERT(INT,            NULLIF(TRIM([reorder_threshold]), '')), 0)       AS [reorder_threshold], 
     COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM([transaction_amount]), '')), 0.00)   AS [transaction_amount], 
-    COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM([transaction_discount]), '')), 0.00) AS [transaction_discount] 
+    COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM([transaction_discount]), '')), 0.00) AS [transaction_discount],
+     -- Evaluate the converted metric. If it falls below zero, set the flag to 1
+    CASE WHEN COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM([transaction_amount]), '')), 0.00) < 0 
+         THEN 1 ELSE 0 END AS [is_negative_value]
 FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data] AS srd
 WHERE ([unit_price] IS NOT NULL OR 
        [cost_price] IS NOT NULL OR 
@@ -53,4 +57,6 @@ WHERE ([unit_price] IS NOT NULL OR
         AND cft.[transaction_amount]   = COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM(srd.[transaction_amount]), '')), 0.00)
         AND cft.[transaction_discount] = COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM(srd.[transaction_discount]), '')), 0.00)
   );
-GO
+
+  -- Show the clean table to verify the data types and contents 
+SELECT * FROM [stg_bright_mart_sales].[dbo].[clean_bright_mart_fact_table];
