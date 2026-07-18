@@ -97,3 +97,19 @@ LEFT JOIN [stg_bright_mart_sales].[dbo].[clean_dim_payment] AS d_pay
 LEFT JOIN [stg_bright_mart_sales].[dbo].[clean_dim_date] AS d_date
     ON d_date.[transaction_date] = COALESCE(TRY_CONVERT(DATE, src.[transaction_date]), '1900-01-01')
    AND d_date.[customer_since]   = COALESCE(TRY_CONVERT(DATE, src.[customer_since]), '1900-01-01')
+
+-- Crtitical anti-duplication guard using WHERE NOT EXISTS and handling numeric conversions/NULLs
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM [stg_bright_mart_sales].[dbo].[clean_bright_mart_fact_table] AS tgt
+    WHERE tgt.[DateID]               = COALESCE(d_date.DateID, 1)
+      AND tgt.[PaymentID]            = COALESCE(d_pay.PaymentID, 1)
+      AND tgt.[ProductID]            = COALESCE(d_prod.ProductID, 1)
+      AND tgt.[CustomerID]           = COALESCE(d_cust.CustomerID, 1)
+      AND tgt.[StoreID]              = COALESCE(d_store.StoreID, 1)
+      AND tgt.[unit_price]           = COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM(src.[unit_price]), '')), 0.00)
+      AND tgt.[cost_price]           = COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM(src.[cost_price]), '')), 0.00)
+      AND tgt.[qty]                  = COALESCE(TRY_CONVERT(INT,            NULLIF(TRIM(src.[qty]), '')), 0)
+      AND tgt.[line_amount]          = COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM(src.[line_amount]), '')), 0.00)
+      AND tgt.[transaction_amount]   = COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM(src.[transaction_amount]), '')), 0.00)
+);
