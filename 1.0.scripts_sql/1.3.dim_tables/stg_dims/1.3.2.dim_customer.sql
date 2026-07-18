@@ -14,25 +14,36 @@ IF OBJECT_ID('[stg_bright_mart_sales].[dbo].[dim_customer]', 'U') IS NULL
     );
 GO
 
--- Insert distinct values into the table from raw data
+-- Insert distinct values into the table from raw data only if they do not already exist
 INSERT INTO [stg_bright_mart_sales].[dbo].[dim_customer] (
         [customer_first_name],
-		[customer_last_name],
-		[customer_email],
-		[customer_phone],
-		[customer_city],
-		[customer_province],
-		[customer_loyalty_tier]
+        [customer_last_name],
+        [customer_email],
+        [customer_phone],
+        [customer_city],
+        [customer_province],
+        [customer_loyalty_tier]
 )
 SELECT DISTINCT
-        [customer_first_name],
-		[customer_last_name],
-		[customer_email],
-		[customer_phone],
-		[customer_city],
-		[customer_province],
-		[customer_loyalty_tier]
-FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data];
+        raw.[customer_first_name],
+        raw.[customer_last_name],
+        raw.[customer_email],
+        raw.[customer_phone],
+        raw.[customer_city],
+        raw.[customer_province],
+        raw.[customer_loyalty_tier]
+FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data] raw
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM [stg_bright_mart_sales].[dbo].[dim_customer] dim
+    WHERE ISNULL(dim.[customer_first_name], '')   = ISNULL(raw.[customer_first_name], '')
+      AND ISNULL(dim.[customer_last_name], '')    = ISNULL(raw.[customer_last_name], '')
+      AND ISNULL(dim.[customer_email], '')        = ISNULL(raw.[customer_email], '')
+      AND ISNULL(dim.[customer_phone], '')        = ISNULL(raw.[customer_phone], '')
+      AND ISNULL(dim.[customer_city], '')         = ISNULL(raw.[customer_city], '')
+      AND ISNULL(dim.[customer_province], '')     = ISNULL(raw.[customer_province], '')
+      AND ISNULL(dim.[customer_loyalty_tier], '') = ISNULL(raw.[customer_loyalty_tier], '')
+);
 
 -- Show the dim customer table
 SELECT *
