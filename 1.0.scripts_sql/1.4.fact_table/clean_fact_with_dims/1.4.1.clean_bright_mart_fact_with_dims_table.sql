@@ -113,3 +113,6 @@ WHERE NOT EXISTS (
       AND tgt.[line_amount]          = COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM(src.[line_amount]), '')), 0.00)
       AND tgt.[transaction_amount]   = COALESCE(TRY_CONVERT(DECIMAL(18, 2), NULLIF(TRIM(src.[transaction_amount]), '')), 0.00)
 );
+
+-- Show the clean fact table to verify the data types and contents 
+SELECT * FROM [stg_bright_mart_sales].[dbo].[clean_bright_mart_fact_table];
