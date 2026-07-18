@@ -10,5 +10,6 @@ CREATE TABLE [stg_bright_mart_sales].[dbo].[clean_bright_mart_fact_table](
         [reorder_threshold]    INT NOT NULL,
         [transaction_amount]   DECIMAL(18, 2) NOT NULL,
         [transaction_discount] DECIMAL(18, 2) NOT NULL,
+        [is_negative_value]    BIT NOT NULL,            -- 1 means True (Negative/Adjustment), 0 means False (Normal Sale)
         [load_date]            DATETIME DEFAULT GETDATE()
     );
