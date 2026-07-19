@@ -64,3 +64,7 @@ WHERE NOT EXISTS (
       AND ISNULL(fact.[PaymentID], '')            = ISNULL(cln.[PaymentID], '')
       AND ISNULL(fact.[DateID], '')               = ISNULL(cln.[DateID], '')
 );
+
+-- Show the dwh dim customer table
+SELECT *
+FROM [dwh_bright_mart_sales].[dbo].[dwh_bright_mart_fact_table];
