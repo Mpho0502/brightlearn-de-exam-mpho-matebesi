@@ -38,3 +38,7 @@ WHERE NOT EXISTS (
       AND ISNULL(dim.[store_manager], '')  = ISNULL(cln.[store_manager], '')
       AND ISNULL(dim.[cashier_name], '')   = ISNULL(cln.[cashier_name], '')
 );
+
+-- Show the dwh dim store table
+SELECT *
+FROM [dwh_bright_mart_sales].[dbo].[dwh_dim_store];
