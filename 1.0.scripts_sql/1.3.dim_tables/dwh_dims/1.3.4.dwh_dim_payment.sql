@@ -18,3 +18,7 @@ WHERE NOT EXISTS (
     FROM [dwh_bright_mart_sales].[dbo].[dwh_dim_payment] dim
     WHERE ISNULL(dim.[payment_method], '') = ISNULL(cln.[payment_method], '')
 );
+
+-- Show the dwh dim product table
+SELECT *
+FROM [dwh_bright_mart_sales].[dbo].[dwh_dim_payment];
