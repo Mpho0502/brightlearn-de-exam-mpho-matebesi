@@ -22,3 +22,7 @@ WHERE NOT EXISTS (
     WHERE ISNULL(dim.[transaction_date], '') = ISNULL(cln.[transaction_date], '')
       AND ISNULL(dim.[customer_since], '')   = ISNULL(cln.[customer_since], '')
 );
+
+-- Show the dwh dim date table
+SELECT *
+FROM [dwh_bright_mart_sales].[dbo].[dwh_dim_date];
