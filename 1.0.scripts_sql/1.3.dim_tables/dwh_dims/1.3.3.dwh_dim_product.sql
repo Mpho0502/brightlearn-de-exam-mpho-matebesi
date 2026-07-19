@@ -34,3 +34,7 @@ WHERE NOT EXISTS (
       AND ISNULL(dim.[sub_category], '') = ISNULL(cln.[sub_category], '')
       AND ISNULL(dim.[sku], '')          = ISNULL(cln.[sku], '')
 );
+
+-- Show the dwh dim product table
+SELECT *
+FROM [dwh_bright_mart_sales].[dbo].[dwh_dim_product];
