@@ -1,5 +1,5 @@
 --Create a stored procedure for dim payment in stg.
-CREATE PROCEDURE [dbo].[sp_create_dim_payment]
+CREATE OR ALTER PROCEDURE [dbo].[sp_create_dim_payment]
 AS
 BEGIN
     SET NOCOUNT ON; --speeds up ETL process,stops server from countinng rows affected
@@ -32,3 +32,5 @@ BEGIN
     FROM [stg_bright_mart_sales].[dbo].[dim_payment];
 END;
 GO
+
+

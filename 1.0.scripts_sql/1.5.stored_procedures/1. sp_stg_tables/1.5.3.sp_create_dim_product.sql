@@ -1,5 +1,5 @@
 --Create a stored procedure for dim product in stg.
-CREATE PROCEDURE [dbo].[sp_create_dim_product]
+CREATE OR ALTER PROCEDURE [dbo].[sp_create_dim_product]
 AS
 BEGIN
     SET NOCOUNT ON; --speeds up ETL process,stops server from countinng rows affected
@@ -48,3 +48,4 @@ BEGIN
     FROM [stg_bright_mart_sales].[dbo].[dim_product];
 END;
 GO
+
