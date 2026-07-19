@@ -1,13 +1,11 @@
 -- Recreate a table with proper DATE data types instead of VARCHAR
 IF OBJECT_ID('[stg_bright_mart_sales].[dbo].[clean_dim_date]', 'U') IS NULL
-BEGIN
     CREATE TABLE [stg_bright_mart_sales].[dbo].[clean_dim_date](
         [DateID] INT IDENTITY(1, 1) PRIMARY KEY,
         [transaction_date] DATE NULL,      -- Converted to DATE type
         [customer_since] DATE NULL,        -- Converted to DATE type
         [load_date] DATETIME DEFAULT GETDATE()
-    );
-END; 
+);
 
 -- Insert rows using WHERE NOT EXISTS to prevent duplicates across multiple execution runs
 INSERT INTO [stg_bright_mart_sales].[dbo].[clean_dim_date] ( 
@@ -26,7 +24,6 @@ WHERE ([transaction_date] IS NOT NULL OR [customer_since] IS NOT NULL)
       WHERE cdd.[transaction_date] = COALESCE(TRY_CONVERT(DATE, srd.[transaction_date]), '1900-01-01')
         AND cdd.[customer_since]   = COALESCE(TRY_CONVERT(DATE, srd.[customer_since]), '1900-01-01')
   );
-GO
 
 -- Show the clean table to verify the data types and contents 
 SELECT *
