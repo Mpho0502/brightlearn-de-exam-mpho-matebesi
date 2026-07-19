@@ -43,6 +43,6 @@ WHERE NOT EXISTS (
       AND ISNULL(dim.[customer_loyalty_tier], '') = ISNULL(cln.[customer_loyalty_tier], '')
 );
 
--- Show the dim customer table
+-- Show the dwh dim customer table
 SELECT *
 FROM [dwh_bright_mart_sales].[dbo].[dwh_dim_customer];
