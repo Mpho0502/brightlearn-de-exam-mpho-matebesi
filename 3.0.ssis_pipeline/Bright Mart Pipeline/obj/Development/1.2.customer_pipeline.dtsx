@@ -1,0 +1,390 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/19/2026 10:41:19 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-PORAMAT"
+  DTS:CreatorName="DESKTOP-PORAMAT\mateb"
+  DTS:DTSID="{C60F454D-9CFF-4DB5-82B3-E783D8F232B1}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{473EB5F2-0A47-477C-A085-B14FD4EDA835}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-PORAMAT\MSSQLSERVER02.dwh_bright_mart_sales]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{03762C5D-60D8-4508-BA97-EB308414973F}"
+      DTS:ObjectName="DESKTOP-PORAMAT\MSSQLSERVER02.dwh_bright_mart_sales">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-PORAMAT\MSSQLSERVER02;Initial Catalog=dwh_bright_mart_sales;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{03762C5D-60D8-4508-BA97-EB308414973F}DESKTOP-PORAMAT\MSSQLSERVER02.dwh_bright_mart_sales;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-PORAMAT\MSSQLSERVER02.stg_bright_mart_sales]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B3240940-257B-46DB-BFFA-11193F97EB40}"
+      DTS:ObjectName="DESKTOP-PORAMAT\MSSQLSERVER02.stg_bright_mart_sales">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-PORAMAT\MSSQLSERVER02;Initial Catalog=stg_bright_mart_sales;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{B3240940-257B-46DB-BFFA-11193F97EB40}DESKTOP-PORAMAT\MSSQLSERVER02.stg_bright_mart_sales;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\create_clean_dim_customer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="create_clean_dim_customer"
+      DTS:DTSID="{eb0653cb-e6fc-493b-83e3-2dcedc267bdc}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="create_clean_dim_customer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B3240940-257B-46DB-BFFA-11193F97EB40}"
+          SQLTask:SqlStatementSource="--create a table with proper DATE data types set to NOT NULL&#xA;IF OBJECT_ID('[stg_bright_mart_sales].[dbo].[clean_dim_customer]', 'U') IS NULL&#xA;    CREATE TABLE [stg_bright_mart_sales].[dbo].[clean_dim_customer](&#xA;        [CustomerID]            INT IDENTITY(1, 1) PRIMARY KEY,&#xA;        [customer_first_name]   VARCHAR(50) NOT NULL,&#xA;        [customer_last_name]    VARCHAR(50) NOT NULL,&#xA;        [customer_email]        VARCHAR(50) NOT NULL,&#xA;        [customer_phone]        VARCHAR(50) NOT NULL,&#xA;        [customer_city]         VARCHAR(50) NOT NULL,&#xA;        [customer_province]     VARCHAR(50) NOT NULL,&#xA;        [customer_loyalty_tier] VARCHAR(50) NOT NULL,&#xA;        [load_date]             DATETIME DEFAULT GETDATE()&#xA;    );" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\create_dwh_dim_customer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="create_dwh_dim_customer"
+      DTS:DTSID="{c239437e-9170-412c-ada3-a7c622154a79}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="create_dwh_dim_customer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{03762C5D-60D8-4508-BA97-EB308414973F}"
+          SQLTask:SqlStatementSource="--Create a table with proper DATE data types set to NOT NULL&#xA;IF OBJECT_ID('[dwh_bright_mart_sales].[dbo].[dwh_dim_customer]', 'U') IS NULL&#xA;    CREATE TABLE [dwh_bright_mart_sales].[dbo].[dwh_dim_customer](&#xA;        [CustomerID]            INT IDENTITY(1, 1) PRIMARY KEY,&#xA;        [customer_first_name]   VARCHAR(50) NOT NULL,&#xA;        [customer_last_name]    VARCHAR(50) NOT NULL,&#xA;        [customer_email]        VARCHAR(50) NOT NULL,&#xA;        [customer_phone]        VARCHAR(50) NOT NULL,&#xA;        [customer_city]         VARCHAR(50) NOT NULL,&#xA;        [customer_province]     VARCHAR(50) NOT NULL,&#xA;        [customer_loyalty_tier] VARCHAR(50) NOT NULL,&#xA;        [load_date]             DATETIME DEFAULT GETDATE()&#xA;    );" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\create_stg_customer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="create_stg_customer"
+      DTS:DTSID="{6809393f-7547-472d-b0df-bea9bd83276b}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="create_stg_customer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B3240940-257B-46DB-BFFA-11193F97EB40}"
+          SQLTask:SqlStatementSource="-- Create table if it does not exist&#xA;IF OBJECT_ID('[stg_bright_mart_sales].[dbo].[dim_customer]', 'U') IS NULL&#xA;&#xA;    CREATE TABLE [stg_bright_mart_sales].[dbo].[dim_customer](&#xA;        [CustomerID] INT IDENTITY(1, 1) PRIMARY KEY,&#xA;        [customer_first_name] [varchar](50) NULL,&#xA;&#x9;&#x9;[customer_last_name] [varchar](50) NULL,&#xA;&#x9;&#x9;[customer_email] [varchar](50) NULL,&#xA;&#x9;&#x9;[customer_phone] [varchar](50) NULL,&#xA;&#x9;&#x9;[customer_city] [varchar](50) NULL,&#xA;&#x9;&#x9;[customer_province] [varchar](50) NULL,&#xA;&#x9;&#x9;[customer_loyalty_tier] [varchar](50) NULL,&#xA;        [load_date] DATETIME DEFAULT GETDATE()&#xA;    );" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\create_tables"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{d5108b76-0d8c-459c-8561-1f05e54b9947}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="create_tables"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\load_clean_dim_customer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="load_clean_dim_customer"
+      DTS:DTSID="{360c1d0e-99ff-414f-9756-84005a8f6a31}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="load_clean_dim_customer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B3240940-257B-46DB-BFFA-11193F97EB40}"
+          SQLTask:SqlStatementSource="    -- Insert distinct values using WHERE NOT EXISTS and handling blanks/NULLs&#xA;INSERT INTO [stg_bright_mart_sales].[dbo].[clean_dim_customer] ( &#xA;    [customer_first_name], &#xA;    [customer_last_name], &#xA;    [customer_email], &#xA;    [customer_phone], &#xA;    [customer_city], &#xA;    [customer_province], &#xA;    [customer_loyalty_tier] &#xA;) &#xA;SELECT DISTINCT &#xA;    -- Clean whitespaces, catch empty blocks, and swap NULLs with 'Unknown'&#xA;    COALESCE(NULLIF(TRIM([customer_first_name]), ''), 'Unknown')   AS [customer_first_name], &#xA;    COALESCE(NULLIF(TRIM([customer_last_name]), ''), 'Unknown')    AS [customer_last_name], &#xA;    COALESCE(NULLIF(TRIM([customer_email]), ''), 'Unknown')        AS [customer_email], &#xA;    COALESCE(NULLIF(TRIM([customer_phone]), ''), 'Unknown')        AS [customer_phone], &#xA;    COALESCE(NULLIF(TRIM([customer_city]), ''), 'Unknown')         AS [customer_city], &#xA;    COALESCE(NULLIF(TRIM([customer_province]), ''), 'Unknown')     AS [customer_province], &#xA;    COALESCE(NULLIF(TRIM([customer_loyalty_tier]), ''), 'Unknown') AS [customer_loyalty_tier] &#xA;FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data] AS srd&#xA;WHERE ([customer_first_name] IS NOT NULL OR &#xA;       [customer_last_name] IS NOT NULL OR &#xA;       [customer_email] IS NOT NULL OR &#xA;       [customer_phone] IS NOT NULL OR &#xA;       [customer_city] IS NOT NULL OR &#xA;       [customer_province] IS NOT NULL OR &#xA;       [customer_loyalty_tier] IS NOT NULL)&#xA;  AND NOT EXISTS (&#xA;      SELECT 1 &#xA;      FROM [stg_bright_mart_sales].[dbo].[clean_dim_customer] AS cdc&#xA;      WHERE cdc.[customer_first_name]   = COALESCE(NULLIF(TRIM(srd.[customer_first_name]), ''), 'Unknown')&#xA;        AND cdc.[customer_last_name]    = COALESCE(NULLIF(TRIM(srd.[customer_last_name]), ''), 'Unknown')&#xA;        AND cdc.[customer_email]        = COALESCE(NULLIF(TRIM(srd.[customer_email]), ''), 'Unknown')&#xA;        AND cdc.[customer_phone]        = COALESCE(NULLIF(TRIM(srd.[customer_phone]), ''), 'Unknown')&#xA;        AND cdc.[customer_city]         = COALESCE(NULLIF(TRIM(srd.[customer_city]), ''), 'Unknown')&#xA;        AND cdc.[customer_province]     = COALESCE(NULLIF(TRIM(srd.[customer_province]), ''), 'Unknown')&#xA;        AND cdc.[customer_loyalty_tier] = COALESCE(NULLIF(TRIM(srd.[customer_loyalty_tier]), ''), 'Unknown')&#xA;  );&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\load_data_stg_customer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="load_data_stg_customer"
+      DTS:DTSID="{59fd5449-9d2a-44b3-bcb3-cfd33923808d}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="load_data_stg_customer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B3240940-257B-46DB-BFFA-11193F97EB40}"
+          SQLTask:SqlStatementSource="-- Insert distinct values into the table from raw data only if they do not already exist&#xA;INSERT INTO [stg_bright_mart_sales].[dbo].[dim_customer] (&#xA;        [customer_first_name],&#xA;        [customer_last_name],&#xA;        [customer_email],&#xA;        [customer_phone],&#xA;        [customer_city],&#xA;        [customer_province],&#xA;        [customer_loyalty_tier]&#xA;)&#xA;SELECT DISTINCT&#xA;        raw.[customer_first_name],&#xA;        raw.[customer_last_name],&#xA;        raw.[customer_email],&#xA;        raw.[customer_phone],&#xA;        raw.[customer_city],&#xA;        raw.[customer_province],&#xA;        raw.[customer_loyalty_tier]&#xA;FROM [stg_bright_mart_sales].[dbo].[bright_mart_raw_data] raw&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1 &#xA;    FROM [stg_bright_mart_sales].[dbo].[dim_customer] dim&#xA;    WHERE ISNULL(dim.[customer_first_name], '')   = ISNULL(raw.[customer_first_name], '')&#xA;      AND ISNULL(dim.[customer_last_name], '')    = ISNULL(raw.[customer_last_name], '')&#xA;      AND ISNULL(dim.[customer_email], '')        = ISNULL(raw.[customer_email], '')&#xA;      AND ISNULL(dim.[customer_phone], '')        = ISNULL(raw.[customer_phone], '')&#xA;      AND ISNULL(dim.[customer_city], '')         = ISNULL(raw.[customer_city], '')&#xA;      AND ISNULL(dim.[customer_province], '')     = ISNULL(raw.[customer_province], '')&#xA;      AND ISNULL(dim.[customer_loyalty_tier], '') = ISNULL(raw.[customer_loyalty_tier], '')&#xA;);&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\load_dwh_dim_customer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="load_dwh_dim_customer"
+      DTS:DTSID="{ff329ef0-f8bb-4089-b86d-84410cd21736}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="load_dwh_dim_customer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{03762C5D-60D8-4508-BA97-EB308414973F}"
+          SQLTask:SqlStatementSource="-- Insert distinct values into the table from raw data only if they do not already exist&#xA;INSERT INTO [dwh_bright_mart_sales].[dbo].[dwh_dim_customer] (&#xA;        [customer_first_name],&#xA;        [customer_last_name],&#xA;        [customer_email],&#xA;        [customer_phone],&#xA;        [customer_city],&#xA;        [customer_province],&#xA;        [customer_loyalty_tier]&#xA;)&#xA;SELECT DISTINCT&#xA;        cln.[customer_first_name],&#xA;        cln.[customer_last_name],&#xA;        cln.[customer_email],&#xA;        cln.[customer_phone],&#xA;        cln.[customer_city],&#xA;        cln.[customer_province],&#xA;        cln.[customer_loyalty_tier]&#xA;FROM [stg_bright_mart_sales].[dbo].[clean_dim_customer] cln&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1 &#xA;    FROM [dwh_bright_mart_sales].[dbo].[dwh_dim_customer] dim&#xA;    WHERE ISNULL(dim.[customer_first_name], '')   = ISNULL(cln.[customer_first_name], '')&#xA;      AND ISNULL(dim.[customer_last_name], '')    = ISNULL(cln.[customer_last_name], '')&#xA;      AND ISNULL(dim.[customer_email], '')        = ISNULL(cln.[customer_email], '')&#xA;      AND ISNULL(dim.[customer_phone], '')        = ISNULL(cln.[customer_phone], '')&#xA;      AND ISNULL(dim.[customer_city], '')         = ISNULL(cln.[customer_city], '')&#xA;      AND ISNULL(dim.[customer_province], '')     = ISNULL(cln.[customer_province], '')&#xA;      AND ISNULL(dim.[customer_loyalty_tier], '') = ISNULL(cln.[customer_loyalty_tier], '')&#xA;);&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{a5612bd2-c92c-4c04-8df2-16146d9339e2}"
+      DTS:From="Package\create_tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\create_stg_customer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{8be68c22-e63d-4a12-a450-19b4e24caa80}"
+      DTS:From="Package\create_stg_customer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\load_data_stg_customer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{f8037f9a-f967-4a76-862a-994edc81cd5c}"
+      DTS:From="Package\load_data_stg_customer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\create_clean_dim_customer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{104b97de-98c3-4c96-acd8-2b74b53782a5}"
+      DTS:From="Package\create_clean_dim_customer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\load_clean_dim_customer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{3f491fa7-b80e-48a5-98ef-7dc648ad4fae}"
+      DTS:From="Package\load_clean_dim_customer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\create_dwh_dim_customer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{7d38814a-48e4-49af-9c70-080a88d3f7f5}"
+      DTS:From="Package\create_dwh_dim_customer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\load_dwh_dim_customer" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="208.8,41.6"
+          Id="Package\create_clean_dim_customer"
+          TopLeft="534.466649091576,266.933331477112" />
+        <NodeLayout
+          Size="203.2,41.6"
+          Id="Package\create_dwh_dim_customer"
+          TopLeft="860.833286299476,381.333330681589" />
+        <NodeLayout
+          Size="175.2,41.6"
+          Id="Package\create_stg_customer"
+          TopLeft="165.8333242726,166.399998842875" />
+        <NodeLayout
+          Size="140.8,41.6"
+          Id="Package\create_tables"
+          TopLeft="184.999989892046,70.199999511838" />
+        <NodeLayout
+          Size="200,41.6"
+          Id="Package\load_clean_dim_customer"
+          TopLeft="539.533313208489,379.599997360309" />
+        <NodeLayout
+          Size="192,41.6"
+          Id="Package\load_data_stg_customer"
+          TopLeft="164.999990984798,265.199998155832" />
+        <NodeLayout
+          Size="193.6,41.6"
+          Id="Package\load_dwh_dim_customer"
+          TopLeft="860.76665578468,475.799996691346" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="246.083324204303,111.799999511838">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.5999993310374"
+              Start="0,0"
+              End="0,47.0999993310374">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.0999993310374" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="257.216657628699,207.999998842875">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57.1999993129566"
+              Start="0,0"
+              End="0,49.6999993129566">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.6999993129566" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="356.999990984798,286.866664816472">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="177.466658106778,0"
+              Start="0,0"
+              End="169.966658106778,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="169.966658106778,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="639.199981150032,308.533331477112">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,71.0666658831969"
+              Start="0,0"
+              End="0,63.5666658831969">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,63.5666658831969" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="739.533313208489,401.266664020949">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="121.299973090987,0"
+              Start="0,0"
+              End="113.799973090987,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="113.799973090987,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="959.999971042078,422.933330681589">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,52.866666009757"
+              Start="0,0"
+              End="0,45.366666009757">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.366666009757" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

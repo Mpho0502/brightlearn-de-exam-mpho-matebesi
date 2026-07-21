@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="DESKTOP-PORAMAT_MSSQLSERVER02.stg_bright_mart_sales"
+  DTS:DTSID="{1A5251C7-D9D3-4D89-968D-6EB2AF2109D3}"
+  DTS:CreationName="OLEDB">
+  <DTS:PropertyExpression
+    DTS:Name="ConnectionString">"Data Source=" + @[$Project::ServerName] + ";Initial Catalog=" + @[$Project::StagingDatabase] + ";Provider=MSOLEDBSQL;Integrated Security=SSPI;"</DTS:PropertyExpression>
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=DESKTOP-PORAMAT\MSSQLSERVER02;Initial Catalog=stg_bright_mart_sales;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-{1A5251C7-D9D3-4D89-968D-6EB2AF2109D3}DESKTOP-PORAMAT_MSSQLSERVER02.stg_bright_mart_sales;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
