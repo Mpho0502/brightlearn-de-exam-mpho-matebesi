@@ -34,7 +34,7 @@ The goal is to design and implement a **clean data pipeline and warehouse** to s
 
 #### 📐 Star Schema Diagram
 
-![BrightMart Star Schema]<img width="682" height="812" alt="BrightMart Star Schema" src="https://github.com/user-attachments/assets/75dc2dbb-6780-4cd8-88b3-1555da732943" />
+<img width="682" height="812" alt="BrightMart Star Schema" src="https://github.com/user-attachments/assets/75dc2dbb-6780-4cd8-88b3-1555da732943" />
 
 
 ---
@@ -43,21 +43,21 @@ The goal is to design and implement a **clean data pipeline and warehouse** to s
 
 **Customer & Transaction Data**
 
-![BrightLearn Raw Data – Transactions]<img width="1647" height="395" alt="data_modeling_01" src="https://github.com/user-attachments/assets/fd066bb7-c641-48b7-b2b6-6853763f9b0e" />
+<img width="1647" height="395" alt="data_modeling_01" src="https://github.com/user-attachments/assets/fd066bb7-c641-48b7-b2b6-6853763f9b0e" />
 
 
 ---
 
 **Product & Inventory Data**
 
-![BrightLearn Raw Data – Products]<img width="1611" height="356" alt="data_modeling_02" src="https://github.com/user-attachments/assets/6587166a-e5b9-420d-a536-a7fc692930d0" />
+<img width="1611" height="356" alt="data_modeling_02" src="https://github.com/user-attachments/assets/6587166a-e5b9-420d-a536-a7fc692930d0" />
 
 
 ---
 
 **Dimension & Fact Table Breakdown**
 
-![BrightLearn Raw Data – Dimensions & Fact]<img width="1351" height="1025" alt="data_modeling_03" src="https://github.com/user-attachments/assets/01dc0bf0-5123-4021-b5bb-52696a4d7e92" />
+<img width="1351" height="1025" alt="data_modeling_03" src="https://github.com/user-attachments/assets/01dc0bf0-5123-4021-b5bb-52696a4d7e92" />
 
 
 ---
@@ -92,7 +92,7 @@ Located in **3.0.ssis_pipeline**:
 
 #### ✅ Successful Pipeline Execution
 
-![Bright Mart SSIS Pipeline Execution]<img width="1907" height="1110" alt="successful pipeline execution" src="https://github.com/user-attachments/assets/520b28e7-f887-4787-a5a5-2c5fcacbb3a5" />
+<img width="1907" height="1110" alt="successful pipeline execution" src="https://github.com/user-attachments/assets/520b28e7-f887-4787-a5a5-2c5fcacbb3a5" />
 
 
 ---
